@@ -1,6 +1,0 @@
-### 1. 获取所有支持的币种
-GET https://okx.com/api/v5/rubik/stat/trading-data/support-coin
-
-### 2. 获取所有产品信息
-# 币币 SPOT; 杠杆 MARGIN; 永续合约 SWAP
-GET https://okx.com/api/v5/public/instruments?instType=MARGIN

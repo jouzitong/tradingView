@@ -1,6 +1,0 @@
-### 1. 查看交易详细信息
-GET http://43.135.132.141:10001/api/v1/tradingViews/CRV-USDT-SWAP?key=root@OKX
-
-
-###
-PATCH http://43.135.159.239:10001/trading/api/v1/settings/update/enablePlaceOrder/AGLD/false?key=123
