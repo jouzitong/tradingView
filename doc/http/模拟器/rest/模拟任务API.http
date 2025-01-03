@@ -1,0 +1,81 @@
+### 1. 应用模拟任务配置
+PATCH {{host}}:9003/api/v1/tasks/BTC-USDT-SWAPFZOc2CbqiPhSZ6ic
+
+### 2. 获取任务的配置上下文
+GET {{host}}:9003/api/v1/tasks/BTC-USDT-SWAPY2JYrwC6zXNTYCOS
+
+### 3. 创建任务
+POST {{host}}:{{port}}/api/v1/tasks?storeEnable=false
+Content-Type: application/json
+
+{
+  "instId": "BTC-USDT-SWAP",
+  "instType": "SWAP",
+  "bars": [
+    "1m"
+  ],
+  "targetWeight": 70,
+  "calculateSettingsFaceMap": {
+    "MACD": {
+      "id": null,
+      "enable": true,
+      "barSettingsMap": {
+        "1m": {
+          "weights": 80,
+          "shortPeriod": 12,
+          "longPeriod": 26,
+          "signalPeriod": 9,
+          "goldenCrossLine": false,
+          "lastPeriod": 3,
+          "minContinuityCount": 1,
+          "maxContinuityCount": 3,
+          "macdTrendTypeMap": {
+            "NONE": "FLUCTUATE",
+            "BURDEN_DOWN": "FLUCTUATE",
+            "PLUS_UP": "FLUCTUATE",
+            "BURDEN_UP": "UP",
+            "PLUS_DOWN": "DOWN"
+          }
+        }
+      },
+      "indicatorType": "MACD"
+    }
+  },
+  "placeOrderSettings": {
+    "cash": 1,
+    "tdMode": "cross",
+    "openOrderType": "market",
+    "closeOrderType": "market",
+    "retraceRate": 0.5,
+    "lever": 100,
+    "limit": {
+      "maxCount": 1,
+      "minIntervalTime": 604800000,
+      "type": null,
+      "sides": [
+        "short",
+        "long"
+      ],
+      "coolingOffTime": 0,
+      "openIntervalTime": 28800000,
+      "maxPrice": null,
+      "minPrice": null
+    },
+    "profit": {
+      "leverProfit": false,
+      "profitRate": 0.008,
+      "maxProfitRate": 0.01,
+      "greedyOco": {
+        "enable": true,
+        "greedyOcoRate": 0.002,
+        "greedyOcoRateTrigger": 0.002,
+        "maxTriggerCount": 4
+      },
+      "minProfitRate": 0.01
+    },
+    "stopLossRate": -0.3,
+    "positionMaxTime": 604800000,
+    "supportMaxTime": false,
+    "supportStopLoss": false
+  }
+}

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="10 seconds">
+
+    <property name="encoder-pattern" value="%date %-18.18thread | %-5.5level %-30.30c{20}: %-5.5L - %msg%n"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <filter class="ai.coevolution.wcs.common.config.LogEventFilterConfiguration"/>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%c{20}:) %yellow(%L) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="HUMAN" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>service</key>
+            <defaultValue>global</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${service}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                    <level>DEBUG</level>
+                </filter>
+                <file>${user.dir}/logs/${service}/${service}.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                    <!-- 每天一归档 -->
+                    <fileNamePattern>${user.dir}/logs/${service}/${service}-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+                    <!-- 单个日志文件最多 100MB, 30天的日志周期，最大不能超过5GB -->
+                    <maxFileSize>100MB</maxFileSize>
+                    <maxHistory>30</maxHistory>
+                    <totalSizeCap>5120MB</totalSizeCap>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>${encoder-pattern}</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <filter class="ai.coevolution.wcs.common.config.LogEventFilterConfiguration"/>
+        <file>${user.dir}/logs/wcs.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 每天一归档 -->
+            <fileNamePattern>${user.dir}/logs/wcs-debug-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <!-- 单个日志文件最多 100MB, 30天的日志周期，最大不能超过5GB -->
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>5120MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${encoder-pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <file>${user.dir}/logs/wcs-warn.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 每天一归档 -->
+            <fileNamePattern>${user.dir}/logs/wcs-warn-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <!-- 单个日志文件最多 100MB, 30天的日志周期，最大不能超过5GB -->
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>5120MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${encoder-pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="WEBSOCKET_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+        <file>${user.dir}/logs/wcs-websocket.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${user.dir}/logs/wcs-websocket-%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+            <!-- 单个日志文件最多 100MB, 30天的日志周期，最大不能超过5GB -->
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>5120MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="ai.coevolution.wcs.common.websocket.AbstractWebsocketManager" level="DEBUG">
+        <appender-ref ref="WEBSOCKET_LOG"/>
+    </logger>
+    <!--    <logger name="org.hibernate.engine.transaction.internal" level="TRACE">-->
+    <!--        <appender-ref ref="CONSOLE"/>-->
+    <!--        <appender-ref ref="DEBUG"/>-->
+    <!--        <appender-ref ref="WARN"/>-->
+    <!--    </logger>-->
+
+    <logger name="ai" additivity="false" level="debug">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="HUMAN"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="WARN"/>
+    </logger>
+
+    <root level="warn">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="WARN"/>
+    </root>
+
+    <!-- http log begin -->
+    <property name="http-pattern" value="trace-id=[%X{trace-id}] %date %-18.18thread | %-5.5level %-30.30c{20}: %-5.5L - %msg%n"/>
+
+    <appender name="HTTP_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${user.dir}/logs/wcs-server-http.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${user.dir}/logs/wcs-server-http-%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>5120MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${http-pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="ai.coevolution.wcs.monitor.slow.log.RestApiLogAspect" level="debug" additivity="false">
+        <appender-ref ref="HTTP_LOG"/>
+    </logger>
+
+    <appender name="FEIGN_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${user.dir}/logs/wcs-feign.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${user.dir}/logs/wcs-feign-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>5120MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${http-pattern}</pattern>
+        </encoder>
+    </appender>
+    <logger name="ai.coevolution.wcs.common.feign.RcsFeignClient" level="debug" additivity="false">
+        <appender-ref ref="FEIGN_LOG"/>
+    </logger>
+    <!-- http log begin -->
+
+    <appender name="AGV_FAULT_ALERT_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${user.dir}/logs/fault-alert.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${user.dir}/logs/fault-alert-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>5120MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${http-pattern}</pattern>
+        </encoder>
+    </appender>
+    <logger name="ai.coevolution.wcs.monitor.fault.FaultAlertServiceImpl" level="debug" additivity="false">
+        <appender-ref ref="AGV_FAULT_ALERT_LOG"/>
+    </logger>
+    <logger name="ai.coevolution.wcs.monitor.fault.FaultAlertClient" level="debug" additivity="false">
+        <appender-ref ref="AGV_FAULT_ALERT_LOG"/>
+    </logger>
+
+    <appender name="AGV_REPORT_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${user.dir}/logs/report/agv-report.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${user.dir}/logs/report/agv-report-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>7</maxHistory>
+            <totalSizeCap>5120MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${encoder-pattern}</pattern>
+        </encoder>
+    </appender>
+    <logger name="ai.coevolution.wcs.resource.mq.AgvReportHandler" level="debug" additivity="false">
+        <appender-ref ref="AGV_REPORT_LOG"/>
+    </logger>
+
+    <!-- slow request log-->
+    <appender name="HTTP_SLOW_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${user.dir}/logs/wcs-http-slow.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${user.dir}/logs/wcs-http-slow-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>5120MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date trace-id=[%X{trace-id}] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="slowHttpLogger" level="debug" additivity="false">
+        <appender-ref ref="HTTP_SLOW_LOG"/>
+    </logger>
+</configuration>

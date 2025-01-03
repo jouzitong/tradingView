@@ -1,0 +1,22 @@
+[
+  {
+    "instId": "AGLD-USDT-SWAP",
+    "barsDateMap": {
+      "1m": {
+        "start": "2021-09",
+        "end": "2024-12"
+      }
+    },
+    "ccy": "AGLD"
+  },
+  {
+    "instId": "CRV-USDT-SWAP",
+    "barsDateMap": {
+      "1m": {
+        "start": "2020-09",
+        "end": "2024-12"
+      }
+    },
+    "ccy": "CRV"
+  }
+]

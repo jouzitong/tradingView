@@ -1,0 +1,88 @@
+== 文档
+
+.币种: BTC
+|===
+|   序号  |   MACD指标   | RSI指标 |  下单指标  | 测试时间段   |   总收益率 | 图片
+
+| 1
+| bars=M_15, minContinuityCount=4
+| bars=M_15, period=12, overbought=70， oversold=30
+| profitRate=0.2
+| 2021.01 - 2024.06
+| 118%
+| image::BTC.jpg[Tiger,200,200]
+
+| 2
+| bars=M_15, minContinuityCount=6
+| bars=M_15, period=12, overbought=70， oversold=30
+| profitRate=0.2
+| 2021.01 - 2024.06
+| 118%
+| image::BTC1.jpg[Tiger,200,200]
+
+| 3
+| bars=M_15, minContinuityCount=8
+| bars=M_15, period=12, overbought=70， oversold=30
+| profitRate=0.2
+| 2021.01 - 2024.06
+| 118%
+| image::BTC2.jpg[Tiger,200,200]
+
+| 4
+| bars=M_30, minContinuityCount=4
+| bars=M_30, period=12, overbought=70， oversold=30
+| profitRate=0.2
+| 2021.01 - 2024.06
+| 67%
+| image::BTC3.jpg[Tiger,200,200]
+
+| 5
+| bars=M_30, minContinuityCount=6
+| bars=M_30, period=12, overbought=70， oversold=30
+| profitRate=0.2
+| 2021.01 - 2024.06
+| 67%
+| image::BTC4.png[Tiger,200,200]
+
+| 6
+| bars=M_30, minContinuityCount=8
+| bars=M_30, period=12, overbought=70， oversold=30
+| profitRate=0.2
+| 2021.01 - 2024.06
+| 81%
+| image::BTC5.png[Tiger,200,200]
+
+| 7
+| bars=M_15, minContinuityCount=6
+| bars=M_15, period=16, overbought=70， oversold=30
+| profitRate=0.2
+| 2021.01 - 2024.06
+| 167%
+| image::BTC6.jpg[Tiger,200,200]
+
+| 8
+| bars=M_15, minContinuityCount=6
+| bars=M_15, period=24, overbought=70， oversold=30
+| profitRate=0.2
+| 2021.01 - 2024.06
+| 123%
+| image::BTC7.jpg[Tiger,200,200]
+
+| 9
+| bars=M_30, minContinuityCount=6
+| bars=M_30, period=16, overbought=70， oversold=30
+| profitRate=0.2
+| 2021.01 - 2024.06
+| 110%
+| image::BTC8.jpg[Tiger,200,200]
+
+| 10
+| bars=M_30, minContinuityCount=6
+| bars=M_30, period=24, overbought=70， oversold=30
+| profitRate=0.2
+| 2021.01 - 2024.06
+| -32%
+| image::BTC9.jpg[Tiger,200,200]
+
+
+|===

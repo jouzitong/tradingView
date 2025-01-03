@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 定义上下文名称 -->
+    <contextName>okx-market</contextName>
+
+    <!-- 设置日志级别 -->
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ALL-FILE" />
+    </root>
+
+    <!-- 特定包的日志配置 -->
+    <logger name="xyz.felh.okx.v5" level="info" additivity="true">
+        <appender-ref ref="SDK-FILE" />
+    </logger>
+
+    <logger name="ai.zzt.okx" level="info" additivity="true">
+        <appender-ref ref="OKX-FILE" />
+    </logger>
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%c{20}:) %yellow(%L) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 文件输出 -->
+    <appender name="OKX-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志文件路径 -->
+        <file>logs/oxk.log</file>
+
+        <!-- 滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志文件名模式 -->
+            <fileNamePattern>logs/oxk-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+
+            <!-- 最大日志文件大小 -->
+            <maxFileSize>100MB</maxFileSize>
+
+            <!-- 最大日志文件数 -->
+            <maxHistory>30</maxHistory>
+
+            <!-- 总日志文件大小限制 -->
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%c{20}:) %yellow(%L) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 文件输出 -->
+    <appender name="SDK-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志文件路径 -->
+        <file>logs/sdk.log</file>
+
+        <!-- 滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志文件名模式 -->
+            <fileNamePattern>logs/sdk-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+
+            <!-- 最大日志文件大小 -->
+            <maxFileSize>100MB</maxFileSize>
+
+            <!-- 最大日志文件数 -->
+            <maxHistory>30</maxHistory>
+
+            <!-- 总日志文件大小限制 -->
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%c{20}:) %yellow(%L) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="ALL-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/all.log</file>
+        <!-- 滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志文件名模式 -->
+            <fileNamePattern>logs/all-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+
+            <!-- 最大日志文件大小 -->
+            <maxFileSize>100MB</maxFileSize>
+
+            <!-- 最大日志文件数 -->
+            <maxHistory>30</maxHistory>
+
+            <!-- 总日志文件大小限制 -->
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%c{20}:) %yellow(%L) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+</configuration>
