@@ -1,0 +1,10 @@
+k-store:
+  storeRoot: /run/media/root/UNTITLED/data/k-store/
+
+logging:
+  level:
+    root: info
+
+ip: 127.0.0.1
+
+

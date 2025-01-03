@@ -1,0 +1,15 @@
+server:
+  port: 9003
+  servlet:
+    context-path: /platform
+spring:
+  profiles:
+    active: local
+  application:
+    name: emulator
+
+okx:
+  rateFile: classpath:SWAP_HOT.json
+  simulated: true
+  emulator:
+    enabled: true

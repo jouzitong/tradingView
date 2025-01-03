@@ -1,0 +1,45 @@
+spring:
+  profiles:
+    # 默认加载本地的配置. 如果需要加载生产环境的配置, 在启动时添加 -Dspring.profiles.active=prod
+    active: local
+    include: common, ${spring.application.name}
+
+# 程序系统相关配置
+app:
+  name: 'collector'
+  # 系统版本
+  version: 'v1.0.0'
+  # 项目启动是否启动初始化, 主要是为了订阅数据, 创建okx的连接等初始化操作. 默认 false
+  init: true
+  # 默认开启 模拟交易
+  simulated: false
+  mail:
+    enable: false
+    receivers:
+      - 528382226@qq.com
+  platform:
+    url: 'http://127.0.0.1:9003/platform/api/v1/settings/{instId}/{version}'
+okx:
+  # 是否启用模拟环境, 默认 true
+  simulated: ${app.simulated}
+  # 是否开启 OKX 连接. 默认开启
+  enable: true
+  # 是否开启 clash 代理. 默认 false
+  proxy: false
+  # 是否开启定时任务: 收集历史数据. 默认 false
+  enableScheduledCollectHistoryData: true
+  rateFile: file:config/SWAP_HOT.json
+  allCcyFile: file:config/SWAP.json
+  syncPrivateTrade: false
+  supportWsChannelList: PUBLIC
+  simulated-api:
+    api-key: '44cad3f1-1deb-4a2c-9ff0-a36857b2bf08'
+    secret-key: '8537260ABE502FCD1C7F373D308AEB12'
+    pass-phrase: 'ZZt012818..'
+
+
+# K-Store 存储引擎相关配置
+k-store:
+  store: kline-store/
+
+ip: loc

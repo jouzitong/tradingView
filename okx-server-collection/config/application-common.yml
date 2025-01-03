@@ -1,0 +1,49 @@
+spring:
+  # 临时加上 允许循环依赖
+  main:
+    allow-bean-definition-overriding: true
+  threads:
+    virtual:
+      enabled: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+    #serialization:
+    #fail_on_empty_beans: false
+  data:
+    mongodb:
+      uri: mongodb://${ip}:27017/okx-maker-test
+      auditing:
+        enabled: true
+        include-query-string: true
+        include-update-command: true
+  mail:
+    # 指定邮件服务器地址
+    host: smtp.qq.com
+    # 登录账户
+    username: 602295988@qq.com
+    # 登录密码
+    password: dsmynwwvyqvlbaic
+    # 端口
+    port: 465
+    # 默认编码
+    default-encoding: UTF-8
+    # 使用的协议
+    protocol: smtps
+    # 其他的属性
+    properties:
+      "mail.smtp.connectiontimeout": 5000
+      "mail.smtp.timeout": 3000
+      "mail.smtp.writetimeout": 5000
+      "mail.smtp.auth": true
+      "mail.smtp.starttls.enable": true
+      "mail.smtp.starttls.required": true
+logging:
+  # 日志配置文件路径
+  #  config: classpath:config/logback-spring.xml
+  config: file:config/logback-spring.xml
+
+ip: 127.0.0.1
+

@@ -1,0 +1,73 @@
+# 配置项目加载的配置文件
+spring:
+  profiles:
+    # 默认加载本地的配置. 如果需要加载生产环境的配置, 在启动时添加 -Dspring.profiles.active=prod
+    active: local
+    include: common
+
+# 程序系统相关配置
+app:
+  # 系统版本, 主要是用于计算版本升级后, 会涉及关键配置的修改.
+  version: v0.0.4
+  # 临时密钥
+  key: 'root@okx'
+  # 项目启动是否启动初始化, 主要是为了订阅数据, 创建okx的连接等初始化操作. 默认 true
+  init: true
+  # 默认开启 模拟交易
+  simulated: true
+  # 邮箱相关配置
+  mail:
+    # 是否开启邮箱通知
+    enable: false
+    # 发送时间间隔, 单位 s. 默认 30 s
+    sendInterval: 30
+    # 邮箱通知列表
+    receivers:
+      - 528382226@qq.com
+  # 是否开启统计功能
+  statisticsEnable: true
+  platform:
+    # 平台 URL
+    url: 'http://127.0.0.1:9003/api/v1/settings/{instId}/{version}'
+
+# 欧易相关配置
+okx:
+  # 是否启用模拟环境, 默认 true
+  simulated: ${app.simulated}
+  # 是否开启 OKX 连接. 默认开启
+  enable: true
+  # 是否开启 clash 代理. 默认 false
+  proxy: false
+  # 是否开启定时任务: 收集历史数据. 默认 false
+  enableScheduledCollectHistoryData: false
+
+  # 常见币种的配置文件. 默认: classpath:SWAP_HOT.json
+  rateFile: file:config/SWAP_HOT.json
+  # 所有币种的配置文件. 默认: classpath:SWAP.json
+  allCcyFile: file:config/SWAP.json
+  # 需要订阅的WS 频道. 默认 PUBLIC
+  supportWsChannelList: PUBLIC, PRIVATE, BUSINESS
+  # 是否通过WS订阅数据. 默认 true
+  syncPrivateTrade: true
+  # 模拟器账号信息配置
+  simulated-api:
+    api-key: 'xxx'
+    secret-key: 'xxx'
+    pass-phrase: 'xxx'
+  # 正式账号信息配置
+  api:
+    api-key: 'xxx'
+    secret-key: 'xxx'
+    pass-phrase: 'xxx'
+
+k-store:
+  # 数据存储根目录. 默认: store/
+  storeRoot: store/
+  # 支持计算的时间周期列表. 默认全部
+  supportBars: 1s, 1m, 3m, 5m, 15m, 15m, 30m, 1H, 2H, 4H, 1D, 5D
+  # 支持存储的时间周期列表
+  storageBars: 1s
+  # 是否支持磁盘存储
+  storageAble: false
+  # K线计算周期
+  period: 10000

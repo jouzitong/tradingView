@@ -1,0 +1,19 @@
+k-store:
+  storeRoot: store/
+app:
+  # 项目启动是否启动初始化, 主要是为了订阅数据, 创建okx的连接等初始化操作. 默认 false
+  init: true
+  mail:
+    enable: true
+  platform:
+    url: http://43.142.108.229:9003/platform/api/v1/settings/{instId}/{version}
+okx:
+  supportWsChannelList: PUBLIC
+
+logging:
+  level:
+    root: info
+
+ip: 127.0.0.1
+
+

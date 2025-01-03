@@ -1,0 +1,4 @@
+### 1. 初始化收集
+GET {{host}}:{{port}}/collector/api/v1/kline/start
+
+

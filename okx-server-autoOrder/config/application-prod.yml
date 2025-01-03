@@ -1,0 +1,24 @@
+app:
+  # 项目启动是否启动初始化, 主要是为了订阅数据, 创建okx的连接等初始化操作. 默认 false
+  init: true
+  # 是否开启模拟交易. 默认 true
+  simulated: true
+  platform:
+    url: 'http://43.142.108.229:9003/platform/api/v1/settings/{instId}/{version}'
+okx:
+  proxy: true
+  supportWsChannelList: PUBLIC, PRIVATE, BUSINESS
+  simulated-api:
+    api-key: '44cad3f1-1deb-4a2c-9ff0-a36857b2bf08'
+    secret-key: '8537260ABE502FCD1C7F373D308AEB12'
+    pass-phrase: 'ZZt012818..'
+  api:
+    api-key: 'a02f80c6-946d-4fe3-84e1-7f9f48996470'
+    secret-key: '4482F194865D0B8B0CA5B93A7BB60143'
+    pass-phrase: 'ZZt012818..'
+
+logging:
+  level:
+    root: info
+
+ip: 127.0.0.1

@@ -1,0 +1,19 @@
+app:
+  version: 'v1.0.0'
+  init: true
+  # 默认开启 模拟交易
+  simulated: true
+okx:
+  rateFile: file:config/SWAP_HOT.json
+  allCcyFile: file:config/SWAP.json
+  simulated: false
+  syncPrivateTrade: false
+  supportWsChannelList: []
+  emulator:
+    enabled: false
+
+k-store:
+  # 是否是客户端. 如果是false, readLocal和serverUrl配置无效
+  isClient: false
+  # 是否读取本地文件. 默认true. false 表示通过ws读取数据, 并一定要配置serverUrl
+  readLocal: false

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="encoder-pattern" value="%date %-18.18thread | %-5.5level %-30.30c{20}: %-5.5L - %msg%n"/>
+
+    <!-- 定义上下文名称 -->
+    <contextName>okx-market</contextName>
+
+    <!-- 设置日志级别 -->
+    <root level="info">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="GLOBAL"/>
+    </root>
+
+    <!-- 特定包的日志配置 -->
+    <logger name="xyz.felh.okx.v5" level="info" additivity="true">
+        <appender-ref ref="SDK-FILE"/>
+    </logger>
+
+    <logger name="ai.zzt.okx" level="debug" additivity="true">
+        <appender-ref ref="OKX-FILE"/>
+    </logger>
+
+    <!-- 控制台输出格式 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%c{20}:) %yellow(%L) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="GLOBAL" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>service</key>
+            <defaultValue>global</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${service}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                    <level>DEBUG</level>
+                </filter>
+                <file>${user.dir}/logs/${service}.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                    <!-- 每天一归档 -->
+                    <fileNamePattern>${user.dir}/logs/${service}/${service}-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+                    <!-- 单个日志文件最多 100MB, 30天的日志周期，最大不能超过1GB -->
+                    <maxFileSize>100MB</maxFileSize>
+                    <maxHistory>10</maxHistory>
+                    <totalSizeCap>1GB</totalSizeCap>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>${encoder-pattern}</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+
+    <!-- 文件输出 -->
+    <appender name="OKX-FILE" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>service</key>
+            <defaultValue>service</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${service}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                    <level>DEBUG</level>
+                </filter>
+                <file>${user.dir}/logs/${service}.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                    <!-- 每天一归档 -->
+                    <fileNamePattern>${user.dir}/logs/${service}/${service}-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+                    <!-- 单个日志文件最多 100MB, 30天的日志周期，最大不能超过1GB -->
+                    <maxFileSize>100MB</maxFileSize>
+                    <maxHistory>10</maxHistory>
+                    <totalSizeCap>1GB</totalSizeCap>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>${encoder-pattern}</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+
+    <!-- 文件输出 -->
+    <appender name="SDK-FILE" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>service</key>
+            <defaultValue>OKX-SDK</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${service}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                    <level>DEBUG</level>
+                </filter>
+                <file>${user.dir}/logs/${service}/${service}.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                    <!-- 每天一归档 -->
+                    <fileNamePattern>${user.dir}/logs/${service}/${service}-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+                    <!-- 单个日志文件最多 100MB, 30天的日志周期，最大不能超过1GB -->
+                    <maxFileSize>100MB</maxFileSize>
+                    <maxHistory>10</maxHistory>
+                    <totalSizeCap>1GB</totalSizeCap>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>${encoder-pattern}</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+
+</configuration>

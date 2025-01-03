@@ -1,0 +1,11 @@
+### 1. 查看交易详细信息
+GET {{host}}:{{port}}/trading/api/v1/trading/BTC
+
+### 2. 添加运行的币种
+POST {{host}}:{{port}}/trading/api/v1/trading/CRV-USDT-SWAP?key=root@okx
+
+### 3. 删除运行的币种
+DELETE {{host}}:{{port}}/api/v1/trading/BTC-USDT-SWAP?key=root@okx
+
+###
+GET http://127.0.0.1:10001/trading/api/v1/trading/BTC

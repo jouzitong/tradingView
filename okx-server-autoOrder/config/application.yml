@@ -1,0 +1,34 @@
+spring:
+  profiles:
+    # 默认加载本地的配置. 如果需要加载生产环境的配置, 在启动时添加 -Dspring.profiles.active=prod
+    active: local
+    include: common
+
+# 程序系统相关配置
+app:
+  # 系统版本
+  version: 'v1.0.0'
+  # 项目启动是否启动初始化, 主要是为了订阅数据, 创建okx的连接等初始化操作. 默认 false
+  init: true
+  # 默认开启 模拟交易
+  simulated: true
+  mail:
+    enable: true
+    receivers:
+      - 528382226@qq.com
+#      - 13670232465@163.com
+  platform:
+    url: 'http://43.142.108.229:9003/platform/api/v1/settings/{instId}/{version}'
+
+# 欧易相关配置
+okx:
+  rateFile: file:config/SWAP_HOT.json
+  allCcyFile: file:config/SWAP.json
+  simulated: ${app.simulated}
+  supportWsChannelList: PUBLIC, PRIVATE, BUSINESS
+#  supportWsChannelList: PUBLIC, PRIVATE
+  syncPrivateTrade: true
+  simulated-api:
+    api-key: '44cad3f1-1deb-4a2c-9ff0-a36857b2bf08'
+    secret-key: '8537260ABE502FCD1C7F373D308AEB12'
+    pass-phrase: 'ZZt012818..'

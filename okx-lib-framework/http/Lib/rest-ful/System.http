@@ -1,0 +1,8 @@
+###
+POST {{host}}:{{port}}/trading/api/v1/systems/pm
+
+
+###
+POST http://43.135.159.239:10001/trading/api/v1/systems/on
+###
+POST http://43.142.108.229:81/trading/api/v1/systems/off

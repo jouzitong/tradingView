@@ -1,0 +1,124 @@
+### 1. 根据币种获取配置上下文
+GET https://{{host}}:{{port}}/platform/api/v1/settings/list
+
+### 获取默认配置
+GET https://{{host}}:{{port}}/platform/api/v1/settings/default
+
+### 2. 应用所有配置
+POST {{platform-url}}/api/v1/settings/applyAll
+Content-Type: application/json
+
+{
+  "instId": "",
+  "instType": "SWAP",
+  "bars": [
+    "15m"
+  ],
+  "targetWeight": 80,
+  "calculateSettingsFaceMap": {
+    "MACD": {
+      "enable": true,
+      "barSettingsMap": {
+        "15m": {
+          "weights": 40,
+          "shortPeriod": 12,
+          "longPeriod": 26,
+          "signalPeriod": 9,
+          "goldenCrossLine": false,
+          "lastPeriod": 4,
+          "minContinuityCount": 1,
+          "maxContinuityCount": 2,
+          "macdTrendTypeMap": {
+            "NONE": "FLUCTUATE",
+            "BURDEN_DOWN": "FLUCTUATE",
+            "PLUS_UP": "FLUCTUATE",
+            "BURDEN_UP": "UP",
+            "PLUS_DOWN": "DOWN"
+          }
+        },
+        "1D": {
+          "weights": 80,
+          "shortPeriod": 12,
+          "longPeriod": 26,
+          "signalPeriod": 9,
+          "goldenCrossLine": false,
+          "lastPeriod": 5,
+          "minContinuityCount": 1,
+          "maxContinuityCount": 3,
+          "macdTrendTypeMap": {
+            "NONE": "FLUCTUATE",
+            "BURDEN_DOWN": "DOWN",
+            "PLUS_UP": "UP",
+            "BURDEN_UP": "UP",
+            "PLUS_DOWN": "DOWN"
+          }
+        }
+      },
+      "indicatorType": "MACD"
+    },
+    "KDJ": {
+      "indicatorType": "KDJ",
+      "enable": false,
+      "barSettingsMap": {
+        "15m": {
+          "weights": 40,
+          "period": 16,
+          "alpha": "0.3333"
+        }
+      }
+    },
+    "RSI": {
+      "indicatorType": "RSI",
+      "enable": true,
+      "barSettingsMap": {
+        "15m": {
+          "weights": 160,
+          "period": 16,
+          "overbought": "95",
+          "oversold": "5"
+        }
+      }
+    }
+  },
+  "placeOrderSettings": {
+    "enablePlaceOrder": false,
+    "cash": 100,
+    "tdMode": "cross",
+    "openOrderType": "market",
+    "closeOrderType": "market",
+    "retraceRate": 0.5,
+    "lever": 1,
+    "limit": {
+      "maxCount": 1,
+      "minIntervalTime": 604800000,
+      "supportTypes": [
+        "SPOT",
+        "MARGIN",
+        "SWAP"
+      ],
+      "sides": [
+        "long","short"
+      ],
+      "coolingOffTime": 0,
+      "openIntervalTime": 28800000,
+      "maxPrice": 102000,
+      "minPrice": null
+    },
+    "profit": {
+      "leverProfit": false,
+      "profitRate": 0.01,
+      "maxProfitRate": 0.05,
+      "greedyOco": {
+        "enable": false,
+        "greedyOcoRate": 0.002,
+        "greedyOcoRateTrigger": 0.002,
+        "maxTriggerCount": 4
+      },
+      "minProfitRate": 0.005
+    },
+    "stopLossRate": -0.3,
+    "positionMaxTime": 604800000,
+    "supportMaxTime": false,
+    "supportStopLoss": false
+  }
+}

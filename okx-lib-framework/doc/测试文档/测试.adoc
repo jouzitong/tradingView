@@ -1,0 +1,346 @@
+= {toc-title}
+:author: JouZiton
+:doctype: book
+:encoding: UTF-8
+:lang: zh-CN
+:numbered: 编号
+:stem: latexmath
+:icons: font
+:source-highlighter: coderay
+:sectnums:
+:sectlinks:
+:sectnumlevels: 2
+:toc: left
+:toc-title: 测试计划
+:toclevels: 2
+
+[perfer]
+== 前言
+
+== 测试计划
+
+=== 测试模版
+
+==== 测试目标
+
+. 这是第一次正式测试, 确保程序能正常运行, 并且没有明显的问题.
+. 能够对市场数据进行正常的计算并将结果通过邮箱通知给用户.
+
+==== 环境
+
+.测试时间范围
+* 2024年11月26号 15：30 => 18:00
+
+.测试版本
+. PlatFrom = v0.3.2
+. autoOrder = v0.3.2
+
+.测试服务器
+IP = 43.135.159.239
+
+.测试配置: version = v1.0.0
+[source,json]
+----
+
+----
+
+
+==== 步骤
+
+* [x] 启动服务
+* [x] 确保服务正常启动, 并观察日志
+* [x] 测试功能点
+* [ ] 记录日志
+* [ ] 记录结果
+
+==== 结果
+
+==== 经验总结
+
+=== 2024年11月26号
+
+==== 测试目标
+
+. 这是第一次正式测试, 确保程序能正常运行, 并且没有明显的问题.
+. 能够对市场数据进行正常的计算并将结果通过邮箱通知给用户.
+
+==== 环境
+
+.测试时间范围
+* 2024年11月26号 15：30 => 18:00
+
+.测试版本
+. `PlatFrom` = `v0.3.2`
+. `AutoOrder` = `v0.3.2`
+. *_version_* = `v1.0.0`
+
+.测试服务器
+IP = 43.135.159.239
+
+.测试配置
+[%collapsible]
+====
+[source,json]
+----
+{
+    "instId": "BTC",
+    "instType": "SWAP",
+    "bars": [
+      "15m"
+    ],
+    "targetWeight": 80,
+    "calculateSettingsFaceMap": {
+      "MACD": {
+        "enable": true,
+        "barSettingsMap": {
+          "15m": {
+            "weights": 80,
+            "shortPeriod": 12,
+            "longPeriod": 26,
+            "signalPeriod": 9,
+            "goldenCrossLine": false,
+            "lastPeriod": 4,
+            "minContinuityCount": 2,
+            "maxContinuityCount": 2,
+            "macdTrendTypeMap": {
+              "NONE": "FLUCTUATE",
+              "BURDEN_DOWN": "FLUCTUATE",
+              "PLUS_UP": "FLUCTUATE",
+              "BURDEN_UP": "UP",
+              "PLUS_DOWN": "DOWN"
+            }
+          }
+        },
+        "indicatorType": "MACD"
+      }
+    },
+    "placeOrderSettings": {
+      "enablePlaceOrder": false,
+      "cash": 2,
+      "tdMode": "cross",
+      "openOrderType": "market",
+      "closeOrderType": "market",
+      "retraceRate": 0.5,
+      "lever": 50,
+      "limit": {
+        "maxCount": 1,
+        "minIntervalTime": 14400000,
+        "supportTypes": [
+          "SPOT",
+          "MARGIN",
+          "SWAP"
+        ],
+        "sides": [
+          "long",
+          "short"
+        ],
+        "coolingOffTime": 60000,
+        "openIntervalTime": 28800000,
+        "maxPrice": null,
+        "minPrice": null
+      },
+      "profit": {
+        "leverProfit": false,
+        "profitRate": 0.03,
+        "maxProfitRate": 0.01,
+        "greedyOco": {
+          "enable": true,
+          "greedyOcoRate": 0.002,
+          "greedyOcoRateTrigger": 0.002,
+          "maxTriggerCount": 4
+        },
+        "minProfitRate": 0.01
+      },
+      "stopLossRate": -0.3,
+      "positionMaxTime": 604800000,
+      "supportMaxTime": false,
+      "supportStopLoss": false
+    }
+}
+----
+====
+
+==== 步骤
+
+* [x] 启动服务
+* [x] 确保服务正常启动, 并观察日志
+* [x] 测试功能点
+* [x] 记录日志
+* [x] 记录结果
+
+==== 结果
+
+* [x] 这是第一次正式测试, 确保程序能正常运行, 并且没有明显的问题.
+* [x] 能够对市场数据进行正常的计算并将结果通过邮箱通知给用户.
+
+==== 经验总结
+
+. 系统可以正常启动, 基本没有位置异常情况
+. 量化交易系统启动后, 需要手动调用接口启动交易: `GET /api/v1/systems/on`.
+
+=== 2024年11月27号
+
+==== 测试目标
+
+[NOTE]
+====
+.进行第二次测试, 对指定的主流币进行量化交易, 并观察其中数据情况.
+. `BTC`
+. `SOL`
+. `ETH`
+. `DOGE`
+====
+
+==== 环境
+
+.测试时间范围
+* 2024年11月27号 14:00 => 18:00
+
+.测试版本
+. `PlatFrom` = `v0.3.2`
+. `AutoOrder` = `v0.3.2`
+. *_version_* = `v1.0.0`
+
+.测试服务器
+IP = 43.135.159.239
+
+.测试配置
+[%collapsible]
+====
+[source,json]
+----
+{
+    "instId": "BTC",
+    "instType": "SWAP",
+    "bars": [
+      "15m"
+    ],
+    "targetWeight": 80,
+    "calculateSettingsFaceMap": {
+      "MACD": {
+        "enable": true,
+        "barSettingsMap": {
+          "15m": {
+            "weights": 80,
+            "shortPeriod": 12,
+            "longPeriod": 26,
+            "signalPeriod": 9,
+            "goldenCrossLine": false,
+            "lastPeriod": 4,
+            "minContinuityCount": 2,
+            "maxContinuityCount": 2,
+            "macdTrendTypeMap": {
+              "NONE": "FLUCTUATE",
+              "BURDEN_DOWN": "FLUCTUATE",
+              "PLUS_UP": "FLUCTUATE",
+              "BURDEN_UP": "UP",
+              "PLUS_DOWN": "DOWN"
+            }
+          }
+        },
+        "indicatorType": "MACD"
+      }
+    },
+    "placeOrderSettings": {
+      "enablePlaceOrder": false,
+      "cash": 2,
+      "tdMode": "cross",
+      "openOrderType": "market",
+      "closeOrderType": "market",
+      "retraceRate": 0.5,
+      "lever": 50,
+      "limit": {
+        "maxCount": 1,
+        "minIntervalTime": 14400000,
+        "supportTypes": [
+          "SPOT",
+          "MARGIN",
+          "SWAP"
+        ],
+        "sides": [
+          "long",
+          "short"
+        ],
+        "coolingOffTime": 60000,
+        "openIntervalTime": 28800000,
+        "maxPrice": null,
+        "minPrice": null
+      },
+      "profit": {
+        "leverProfit": false,
+        "profitRate": 0.03,
+        "maxProfitRate": 0.01,
+        "greedyOco": {
+          "enable": true,
+          "greedyOcoRate": 0.002,
+          "greedyOcoRateTrigger": 0.002,
+          "maxTriggerCount": 4
+        },
+        "minProfitRate": 0.01
+      },
+      "stopLossRate": -0.3,
+      "positionMaxTime": 604800000,
+      "supportMaxTime": false,
+      "supportStopLoss": false
+    }
+}
+----
+====
+
+==== 步骤
+
+* [ ] 启动服务
+* [ ] 确保服务正常启动, 并观察日志
+* [ ] 测试功能点
+* [ ] 记录日志
+* [ ] 记录结果
+
+==== 结果
+
+* [x] 这是第一次正式测试, 确保程序能正常运行, 并且没有明显的问题.
+* [x] 能够对市场数据进行正常的计算并将结果通过邮箱通知给用户.
+
+==== 经验总结
+
+
+|===
+| 序号 | 币种 |交易次数 | 盈亏结果 | 备注
+
+| 1
+| `BTC`
+|
+|
+|
+
+| 2
+| `ETH`
+|
+|
+|
+
+| 3
+| `SOL`
+|
+|
+|
+
+| 4
+| `DOGE`
+|
+|
+|
+
+
+|===
+
+
+[appendix]
+
+[appendix-A]
+== 附录1:
+
+
+
+
+[appendix-B]
+== 附录2:

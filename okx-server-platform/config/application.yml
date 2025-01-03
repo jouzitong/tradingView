@@ -1,0 +1,45 @@
+spring:
+  profiles:
+    # 默认加载本地的配置. 如果需要加载生产环境的配置, 在启动时添加 -Dspring.profiles.active=prod
+    active: local
+    include: common
+
+# 程序系统相关配置
+app:
+  name: 'platform'
+  # 系统版本
+  version: 'v1.0.0'
+  # 项目启动是否启动初始化, 主要是为了订阅数据, 创建okx的连接等初始化操作. 默认 true
+  init: true
+  # 默认开启 模拟交易
+  simulated: true
+
+api:
+  key: 'root@okx'
+
+okx:
+  enable: true
+  proxy: true
+  rateFile: file:config/SWAP_HOT.json
+  allCcyFile: file:config/SWAP.json
+  syncPrivateTrade: false
+  syncLever: false
+
+# K-Store 存储引擎相关配置
+k-store:
+  store: store/
+
+# 模拟器相关配置
+emulator:
+  # 是否定时跑任务组. 默认 false
+  runScheduledTaskGroup: false
+  task:
+    # 模拟器同时执行任务数量限制. 默认 100
+    limit: 100
+    # 是否开启任务下单信息存储
+    storeOrders: false
+    # 跑定时任务. 默认 false 不跑任务
+    runScheduledTask: false
+
+
+ip: 127.0.0.1
