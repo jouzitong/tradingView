@@ -6,5 +6,5 @@ package ai.zzt.okx.message.template;
  * @author zhouzhitong
  * @since 2025/1/4
  **/
-public class MessageTemplate {
+public interface MessageTemplate {
 }
