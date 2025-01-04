@@ -1,9 +1,14 @@
-package ai.zzt.okx.common.message.bean;
+package ai.zzt.okx.message.email.bean;
+
+import ai.zzt.okx.message.base.Message;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * 发送的消息
- */
-public interface Message {
+ * @author zhouzhitong
+ * @since 2025/1/4
+ **/
+public interface EmailMessage extends Message {
+
     /**
      * 消息的唯一性标识
      *
@@ -41,6 +46,7 @@ public interface Message {
      *
      * @return 是否是html 文档格式. 默认 true
      */
+    @JsonIgnore
     default boolean isHtml() {
         return true;
     }

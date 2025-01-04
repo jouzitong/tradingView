@@ -1,11 +1,11 @@
 package ai.zzt.okx.dispatcher.service;
 
 import ai.zzt.okx.common.enums.TrendType;
-import ai.zzt.okx.common.message.bean.DefaultMessage;
-import ai.zzt.okx.common.message.service.NoticeService;
 import ai.zzt.okx.common.properties.AppProperties;
 import ai.zzt.okx.common.utils.InstUtils;
 import ai.zzt.okx.common.utils.ThreadUtils;
+import ai.zzt.okx.message.email.bean.DefaultMessage;
+import ai.zzt.okx.message.service.INoticeService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class EmailMessageService implements CommandLineRunner {
 
     @Resource
-    private NoticeService noticeService;
+    private INoticeService noticeService;
 
     @Resource
     private AppProperties appProperties;

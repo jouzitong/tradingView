@@ -1,16 +1,15 @@
-package ai.zzt.okx.common.message.service;
+package ai.zzt.okx.message.service;
 
 import ai.zzt.okx.common.enums.NoticeType;
-import ai.zzt.okx.common.message.bean.Message;
+import ai.zzt.okx.message.base.Message;
 
 import java.util.List;
 
 /**
- * 通知服务
- *
- * @author liu
- */
-public interface NoticeService {
+ * @author zhouzhitong
+ * @since 2025/1/4
+ **/
+public interface INoticeService {
 
     /**
      * 服务类型

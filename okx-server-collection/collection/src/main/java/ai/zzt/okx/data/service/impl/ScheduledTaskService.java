@@ -3,10 +3,10 @@ package ai.zzt.okx.data.service.impl;
 import ai.zzt.okx.calculate.indicator.face.BollFace;
 import ai.zzt.okx.common.enums.IndicatorType;
 import ai.zzt.okx.common.enums.TrendType;
-import ai.zzt.okx.common.message.bean.Message;
-import ai.zzt.okx.common.message.service.NoticeService;
 import ai.zzt.okx.common.properties.AppProperties;
 import ai.zzt.okx.common.utils.K;
+import ai.zzt.okx.message.email.bean.EmailMessage;
+import ai.zzt.okx.message.service.INoticeService;
 import ai.zzt.okx.okx_client.properties.OkxProperties;
 import ai.zzt.okx.okx_client.serivce.OkxKLineApiService;
 import ai.zzt.okx.settings.calculate.face.BollSettingsFace;
@@ -46,7 +46,7 @@ public class ScheduledTaskService {
     private AppProperties appProperties;
 
     @Resource
-    private NoticeService noticeService;
+    private INoticeService noticeService;
 
     @Resource
     private OkxKLineApiService okxRestApiService;
@@ -75,11 +75,14 @@ public class ScheduledTaskService {
                 downList.add(instId);
             }
         });
-        Message message = new Message() {
+
+        // TODO 邮件发送, 应该还要支持 wechat 等
+        EmailMessage message = new EmailMessage() {
             @Override
             public String id() {
                 return "Okx 币种涨跌";
             }
+
             @Override
             public String content() {
                 return "币种涨:  " + upList + " </p> 跌的币种: " + downList;

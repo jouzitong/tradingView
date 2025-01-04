@@ -28,6 +28,7 @@
         <module>api-platform</module>
         <module>api-trading</module>
         <module>api-collector</module>
+        <module>message</module>
     </modules>
     <properties>
         <java.version>21</java.version>
@@ -71,6 +72,12 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>client</artifactId>
+                <version>${version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>message</artifactId>
                 <version>${version}</version>
             </dependency>
 

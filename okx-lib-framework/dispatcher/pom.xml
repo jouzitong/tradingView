@@ -31,6 +31,12 @@
             <artifactId>settings</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>ai.zzt.okx</groupId>
+            <artifactId>message</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

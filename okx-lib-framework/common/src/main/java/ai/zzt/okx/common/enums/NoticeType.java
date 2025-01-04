@@ -9,7 +9,8 @@ import lombok.Getter;
 @Getter
 public enum NoticeType {
 
-    email("email"),     // 邮件
+    EMAIL("email"),     // 邮件
+    WE_CHAT("weChat"),     // 企业微信
     ;
 
     private final String type;

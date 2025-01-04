@@ -1,12 +1,12 @@
 package ai.zzt.okx.dispatcher.engine;
 
 import ai.zzt.okx.common.context.SystemContext;
-import ai.zzt.okx.common.message.bean.DefaultMessage;
-import ai.zzt.okx.common.message.service.NoticeService;
 import ai.zzt.okx.common.properties.AppProperties;
 import ai.zzt.okx.common.utils.ThreadUtils;
 import ai.zzt.okx.dispatcher.manage.RequestManager;
 import ai.zzt.okx.dispatcher.request.TradeOrderRequest;
+import ai.zzt.okx.message.email.bean.DefaultMessage;
+import ai.zzt.okx.message.service.INoticeService;
 import ai.zzt.okx.v5.entity.ws.pub.MarkPrice;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public abstract class BaseTradeOrderEngine implements TradeOrderEngine {
     protected OrderEngine orderEngine;
 
     @Resource
-    private NoticeService noticeService;
+    private INoticeService noticeService;
 
     @Resource
     private AppProperties appProperties;
