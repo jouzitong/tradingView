@@ -22,6 +22,8 @@ public class CommonWebConfig implements WebMvcConfigurer {
     // FIXME 临时解决跨域请求问题
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        // 设置允许跨域的路径
+        log.info("addCorsMappings");
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowedMethods("*")

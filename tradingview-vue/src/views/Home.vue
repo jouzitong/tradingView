@@ -62,12 +62,13 @@
             </el-form-item>
 
             <el-form-item label="上下文配置">
-              <el-input
-                  type="text"
-                  v-model="settingsContextInput"
-                  @input="handleInput"
-              ></el-input>
-              <el-button @click="showSettingsDetail=true" style="color: red; background-color: #0a8415">配置上下文
+              <!--              <el-input
+                                type="text"
+                                v-model="settingsContextInput"
+                            ></el-input>-->
+
+              <el-button @click="showSettingsDetail=true" style="color: red; background-color: #0a8415">
+                配置上下文
               </el-button>
             </el-form-item>
 
@@ -158,16 +159,15 @@ export default {
       wsUrl: process.env.VUE_APP_WS_URL,
       instConfig: {
         uid: 'TEST',
-        instId: '',
+        instId: 'BTC',
         bar: '1H',
-        startTime: '2024-08-01',
+        startTime: '2025-01-01',
         endTime: null,
         settingsContext: null,
         autoPush: true,
         interval: 1000,
         limit: 100,
       },
-      settingsContextInput: null,
       instIds: [],
     }
   },
@@ -177,22 +177,13 @@ export default {
       console.log("提交表单")
       this.showSettings = false;
       this.$refs.tradingviewPc.sendMsg();
-    },
-    handleInput(value) {
-      this.settingsContextInput = value;
-      try {
-        // 尝试解析为 JSON 对象
-        const parsed = JSON.parse(value);
-        this.instConfig.settingsContext = parsed;
-        console.log("解析成功：", parsed);
-      } catch (error) {
-        console.warn("输入的内容不是有效的 JSON 格式：", error.message);
-      }
+      // sendMsg时, 将 settingsContext 转换成 string 对象了, 现在需要转换成对象
+      this.instConfig.settingsContext = JSON.parse(this.instConfig.settingsContext);
     },
 
     localSaveSettingsContext() {
       this.showSettingsDetail = false;
-      this.settingsContextInput = JSON.stringify(this.instConfig.settingsContext);
+      console.log("settings type: ", typeof this.instConfig.settingsContext)
     },
 
     getDefaultSettings() {
@@ -237,7 +228,13 @@ export default {
     }
   },
 
-  created() {
+  computed: {
+    bars() {
+      return store.getters.bars;
+    },
+  },
+
+  mounted() {
     // this.isCheckPC()
     if (this.isCheckPC()) {
       this.isPC = true
@@ -246,11 +243,7 @@ export default {
     }
     this.getDefaultSettings();
   },
-  computed: {
-    bars() {
-      return store.getters.bars;
-    },
-  },
+
   beforeMount() {
     this.$http.instruments.instIds().then(resp => {
       if (resp.code === 0) {

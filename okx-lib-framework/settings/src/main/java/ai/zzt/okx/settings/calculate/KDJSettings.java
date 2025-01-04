@@ -58,7 +58,7 @@ public class KDJSettings extends BaseCalculateSettings {
      */
     private KDJJStrategy jLineStrategy;
 
-    @Deprecated
+//    @Deprecated
     public KDJSettings(String id, InstrumentType instType) {
         super(id, instType);
     }

@@ -8,7 +8,7 @@ GET {{platform-url}}/api/v1/tasks/CRV-USDT-SWAPA5K48VvtGPhpVVOV
 GET {{platform-url}}/api/pri/v1/settings/CRV
 
 ### 3. 创建任务
-POST {{platform-url}}/api/v1/tasks?storeEnable=false&st=2024-08
+POST {{platform-url}}/api/v1/tasks?storeEnable=false&st=2025-01
 Content-Type: application/json
 
 {

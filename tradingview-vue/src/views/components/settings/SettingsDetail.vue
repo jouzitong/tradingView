@@ -1,6 +1,5 @@
 <template>
   <div class="detail rollbar">
-    <!--    {{ settings }}-->
     <form>
       <div class="header-container">
         <div class="header-left container">
@@ -45,16 +44,16 @@
             <span>是</span>
           </div>
 
-          <div>
-            <div>
+          <div style="display: flex">
+            <div style="display: flex">
               <label>下单金额: <span class="required">*</span></label>
               <input name="cash" type="number"
                      v-if="placeOrder()" v-model="placeOrder().cash"/>
             </div>
-            <div>
+            <div style="display: flex">
               <label>杠杆倍数: <span class="required">*</span></label>
-              <input name="lever" type="number" v-model="placeOrder().lever"/>
-              <span>(当前账户配置: 全仓: x100, 逐仓 多x20  空x10)</span>
+              <input disabled name="lever" type="number" v-model="placeOrder().lever"/>
+<!--              <span>(当前账户配置: 全仓: x100, 逐仓 多x20  空x10)</span>-->
               <el-button type="warning">同步</el-button>
             </div>
           </div>
@@ -74,11 +73,11 @@
             </div>
             <div>
               <div>
-                <label>开仓最高价: </label>
+                <label>看涨最高价: </label>
                 <input name="maxPrice" type="number" v-model="placeOrder().limit.maxPrice"/>
               </div>
               <div>
-                <label>开仓最低价: </label>
+                <label>看跌最低价: </label>
                 <input name="minPrice" type="number" v-model="placeOrder().limit.minPrice"/>
               </div>
             </div>
@@ -227,7 +226,7 @@
             <div ref="KDJ" id="KDJ" class="settings">
               <template v-for="(bar,index) in (bars)">
                 <template v-if="settings.bars.includes(bar.code)">
-                  <div ref="'macd-'+ {{bar.code}}" class="settings-item" :key="'kdj_'+index">
+                  <div ref="'kdj-'+ {{bar.code}}" class="settings-item" :key="'kdj_'+index">
                     <select disabled>
                       <option :value="bar.code"> {{ bar.name }}（分析周期）</option>
                     </select>
@@ -243,7 +242,7 @@
                       </div>
                       <div class="parameter-row">
                         <label>平滑系数: <span class="required">*</span></label>
-                        <input type="number" v-model="getIndex('KDJ',bar).alpha"/>
+                        <input type="text" v-model="getIndex('KDJ',bar).alpha"/>
                       </div>
                     </div>
                     <!-- 策略 -->
@@ -286,11 +285,11 @@
                         </div>
                         <div class="parameter-row">
                           <label>最小变更幅度: <span class="required">*</span></label>
-                          <input type="number" v-model="getIndex('K line',bar).lossStrategy.minDiffRate" min="0.01"/>
+                          <input type="number" v-model="getIndex('K line',bar).lossStrategy.minDiffRate"/>
                         </div>
                         <div class="parameter-row">
                           <label>回弹幅度: <span class="required">*</span></label>
-                          <input type="number" v-model="getIndex('K line',bar).lossStrategy.reboundRate" min="0.01"/>
+                          <input type="number" v-model="getIndex('K line',bar).lossStrategy.reboundRate"/>
                         </div>
                       </div>
                     </div>
@@ -316,6 +315,11 @@ import store from "@/store";
 
 export default {
   name: "SettingDetail",
+  data() {
+    return {
+      defaultSettings: null,
+    }
+  },
   // props: ["settings", "save", "applyAll", "canUpdate",],
   props: {
     "settings": {required: true, type: Object},
@@ -358,34 +362,37 @@ export default {
 
     // 获取下单配置
     placeOrder() {
-      // if (this.settings.placeOrderSettings === undefined) {
-      //   return {limit: {}};
-      // }
       return this.settings.placeOrderSettings;
     },
 
     getIndex(key, bar) {
       let val = this.settings.calculateSettingsFaceMap[key];
       // 判断 val 是否存在
+
       if (!val) {
-        // 如果不存在，设置默认值
-        if ('K line' === key) {
-          return {lossStrategy: {timePeriod: 12, minDiffRate: 0.1, reboundRate: 0.02}};
-        }
-        return {weights: 40,};
+        this.$set(this.settings.calculateSettingsFaceMap, key, {
+          enable: true,
+          indicatorType: key,
+          barSettingsMap: {}
+        });
+        val = this.settings.calculateSettingsFaceMap[key];
+      }
+      if (key === 'KDJ') {
+        console.log("KDJ配置1: ", val, "--- ", bar.code);
       }
       if (!val.barSettingsMap[bar.code]) {
-        if ('K line' === key) {
-          this.$set(val.barSettingsMap, bar.code, {
-            weights: 40,
-            lossStrategy: {timePeriod: 12, minDiffRate: 0.1, reboundRate: 0.02}
-          });
-        } else {
-          this.$set(val.barSettingsMap, bar.code, {weights: 40,});
-        }
-        return this.settings.calculateSettingsFaceMap[key];
+        this.$set(val.barSettingsMap, bar.code, this.getOrDefault(key));
+      }
+      if (key === 'KDJ') {
+        console.log("val", val)
+        console.log("KDJ配置2: ", val.barSettingsMap[bar.code])
       }
       return val.barSettingsMap[bar.code];
+    },
+
+    getOrDefault(key) {
+      let val = this.defaultSettings.calculateSettingsFaceMap[key];
+      return val.barSettingsMap["1H"];
     }
 
   },
@@ -396,8 +403,25 @@ export default {
     },
     indicators() {
       return store.getters.indicators;
-    }
+    },
+    defaultBar() {
+      return {
+        "code": "1H",
+        "name": "1时",
+        "enable": true
+      };
+    },
   },
+
+  mounted() {
+    this.$http.settings.getDefaultSettings().then(res => {
+      if (res.code === 0) {
+        this.defaultSettings = res.data;
+      } else {
+        this.$message.error(res.msg);
+      }
+    })
+  }
 
 }
 </script>

@@ -4,6 +4,7 @@ import ai.zzt.okx.common.base.Context;
 import ai.zzt.okx.common.enums.IndicatorType;
 import ai.zzt.okx.common.utils.json.JackJsonUtils;
 import ai.zzt.okx.settings.calculate.BollSettings;
+import ai.zzt.okx.settings.calculate.KDJSettings;
 import ai.zzt.okx.settings.calculate.KSettings;
 import ai.zzt.okx.settings.calculate.MacdSettings;
 import ai.zzt.okx.settings.calculate.RsiSettings;
@@ -128,6 +129,7 @@ public class SettingsContext implements Context {
             macdSettingsFace.addSettings(bar, new MacdSettings(instId, instType));
             kSettingsFace.addSettings(bar, new KSettings(instId, instType));
             bollSettingsFace.addSettings(bar, new BollSettings(instId, instType));
+            kdjSettingsFace.addSettings(bar, new KDJSettings(instId, instType));
         }
     }
 
