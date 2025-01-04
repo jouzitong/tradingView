@@ -247,7 +247,51 @@
                     </div>
                     <!-- 策略 -->
                     <div class="strategy">
-                      <h2>策略</h2>
+
+                      <!-- 新增 jlineStrategy.enable 参数 -->
+                      <h3>J线策略:</h3>
+                      <div class="parameter-row">
+                        <label>J线策略启用: <span class="required">*</span></label>
+                        <input type="checkbox" v-model="getIndex('KDJ',bar).jlineStrategy.enable"/>
+                      </div>
+                      <!-- 新增 jlineStrategy.overbought 参数 -->
+                      <div class="parameter-row">
+                        <label>超买阈值: <span class="required">*</span></label>
+                        <input type="number" v-model="getIndex('KDJ',bar).jlineStrategy.overbought"/>
+                      </div>
+                      <!-- 新增 jlineStrategy.oversold 参数 -->
+                      <div class="parameter-row">
+                        <label>超卖阈值: <span class="required">*</span></label>
+                        <input type="number" v-model="getIndex('KDJ',bar).jlineStrategy.oversold"/>
+                      </div>
+
+                      <h3>偏差策略: </h3>
+                      <!-- 新增 deviationStrategy.enable 参数 -->
+                      <div class="parameter-row">
+                        <label>偏差策略启用: <span class="required">*</span></label>
+                        <input type="checkbox" v-model="getIndex('KDJ',bar).deviationStrategy.enable"/>
+                      </div>
+                      <!-- 新增 deviationStrategy.deviationThreshold 参数 -->
+                      <div class="parameter-row">
+                        <label>偏差阈值: <span class="required">*</span></label>
+                        <input type="number" v-model="getIndex('KDJ',bar).deviationStrategy.deviationThreshold"/>
+                      </div>
+                      <!-- 新增 goldenCrossStrategy.enable 参数 -->
+                      <h3>金叉策略: </h3>
+                      <div class="parameter-row">
+                        <label>金叉策略启用: <span class="required">*</span></label>
+                        <input type="checkbox" v-model="getIndex('KDJ',bar).goldenCrossStrategy.enable"/>
+                      </div>
+                      <!-- 新增 goldenCrossStrategy.goldenCrossThreshold 参数 -->
+                      <div class="parameter-row">
+                        <label>金叉阈值: <span class="required">*</span></label>
+                        <input type="number" v-model="getIndex('KDJ',bar).goldenCrossStrategy.goldenCrossThreshold"/>
+                      </div>
+                      <!-- 新增 goldenCrossStrategy.deathCrossThreshold 参数 -->
+                      <div class="parameter-row">
+                        <label>死叉阈值: <span class="required">*</span></label>
+                        <input type="number" v-model="getIndex('KDJ',bar).goldenCrossStrategy.deathCrossThreshold"/>
+                      </div>
                     </div>
                   </div>
                 </template>
@@ -427,117 +471,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-
-.header-container {
-  display: flex;
-
-  .header-left {
-    flex: 1;
-  }
-
-  .header-right {
-    flex: 2;
-  }
-}
-
-//label {
-//  width: 150px;
-//  display: inline-block;
-//  text-align: right;
-//
-//  .label-name {
-//
-//  }
-//
-//  .label-value {
-//
-//  }
-//}
-
-
-.indicators-container {
-  .indicators-detail {
-    display: flex;
-    flex: 1;
-  }
-
-  .indicators-items {
-    display: flex;
-  }
-
-}
-
-.settings {
-  flex: 1;
-
-  .settings-item {
-    height: 430px;
-    /* 设置边框 */
-    border: 1px solid white;
-    /* 设置宽度占25% */
-    flex: 1;
-    flex-shrink: 0;
-  }
-}
-
-.detail {
-  /* 整体靠左 */
-  text-align: left;
-  /*  */
-}
-
-input[type=number],
-input[type=text] {
-  color: red;
-  /* 宽度设置80px */
-  width: 80px;
-}
-
-.bars-container {
-  display: flex;
-  flex-wrap: wrap; /* 换行 */
-  //gap: 5px; /* 元素间距 */
-}
-
-.bar-item {
-  width: calc(25% - 5px); /* 每行 4 个，减去间距 */
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.rollbar {
-  text-align: left;
-  /* 滚动条设置 */
-  overflow-y: auto;
-  height: 100%;
-  /* 滚动条样式 */
-  scrollbar-width: unset;
-  scrollbar-color: #888 #f1f1f1;
-}
-
-/* 写一个显示边框的样式 */
-.container {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.container-tail {
-  color: #0a8415;
-
-  button {
-    /* 按钮变大 200px */
-    font-size: larger;
-  }
-}
-
-.delete {
-  /* 删除线 */
-  text-decoration: line-through;
-  color: yellow;
-  background-color: #6f2626;
-}
-
+@import '../css/settings';
 </style>

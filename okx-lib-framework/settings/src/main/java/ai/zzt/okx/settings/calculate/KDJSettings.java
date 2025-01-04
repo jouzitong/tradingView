@@ -36,7 +36,7 @@ public class KDJSettings extends BaseCalculateSettings {
     /**
      * 平滑系数
      */
-    private BigDecimal alpha = BigDecimal.valueOf(2.0 / 3);
+    private BigDecimal alpha = BigDecimal.valueOf(0.6667);
 
 //    /**
 //     * 超买/超卖区域策略
@@ -46,19 +46,19 @@ public class KDJSettings extends BaseCalculateSettings {
     /**
      * 偏离值策略
      */
-    private KDJDeviationStrategy deviationStrategy;
+    private KDJDeviationStrategy deviationStrategy = new KDJDeviationStrategy();
 
     /**
      * 交叉策略
      */
-    private KDJGoldenCrossStrategy goldenCrossStrategy;
+    private KDJGoldenCrossStrategy goldenCrossStrategy = new KDJGoldenCrossStrategy();
 
     /**
      * J线策略
      */
-    private KDJJStrategy jLineStrategy;
+    private KDJJStrategy jLineStrategy = new KDJJStrategy();
 
-//    @Deprecated
+    //    @Deprecated
     public KDJSettings(String id, InstrumentType instType) {
         super(id, instType);
     }

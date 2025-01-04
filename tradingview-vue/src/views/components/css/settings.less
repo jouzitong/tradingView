@@ -1,0 +1,181 @@
+/* 整体页面背景及文字颜色设置 */
+body {
+  background-color: black;
+  color: white;
+}
+
+.header-container {
+  display: flex;
+  margin-bottom: 15px;
+
+  .header-left {
+    flex: 1;
+  }
+
+  .header-right {
+    flex: 2;
+  }
+}
+
+.indicators-container {
+  margin-top: 15px;
+  .indicators-detail {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+}
+
+.settings {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+
+  .settings-item {
+    height: 600px;
+    /* 设置边框 */
+    border: 1px solid white;
+    /* 设置宽度占25% */
+    flex: 1;
+    flex-shrink: 0;
+    margin: 5px;
+  }
+}
+
+.detail {
+  /* 整体靠左 */
+  text-align: left;
+  /* 滚动条设置 */
+  overflow-y: auto;
+  height: 100%;
+  /* 滚动条样式 */
+  scrollbar-width: unset;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+input[type=number],
+input[type=text],
+select {
+  /* 输入框及下拉框字体颜色调整为黑色，便于查看 */
+  color: black;
+  /* 宽度设置80px */
+  width: 80px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 3px;
+}
+
+.bars-container {
+  display: flex;
+  flex-wrap: wrap; /* 换行 */
+  gap: 5px; /* 元素间距 */
+}
+
+.bar-item {
+  width: calc(25% - 5px); /* 每行 4 个，减去间距 */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.rollbar {
+  text-align: left;
+  /* 滚动条设置 */
+  overflow-y: auto;
+  height: 100%;
+  /* 滚动条样式 */
+  scrollbar-width: unset;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+/* 容器样式 */
+.container {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.container-tail {
+  color: #0a8415;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+
+  button {
+    /* 按钮变大 200px */
+    font-size: larger;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0a8415;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+.delete {
+  /* 删除线 */
+  text-decoration: line-through;
+  color: yellow;
+  background-color: #6f2626;
+}
+
+label {
+  width: 150px;
+  display: inline-block;
+  text-align: right;
+  margin-right: 10px;
+}
+
+input[type="radio"] + span {
+  margin-left: 5px;
+}
+
+/* 鼠标悬停在按钮上的样式 */
+.container-tail button:hover {
+  background-color: #086a10;
+}
+
+//.indicators-items {
+//  display: flex;
+//  flex-wrap: wrap;
+//}
+
+/* 计算指标栏目复选框和文字样式调整 */
+.indicators-items div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.indicators-items input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.indicators-items {
+  display: flex;
+  flex-direction: column; // 垂直排列元素
+}
+
+.indicators-items div {
+  display: flex; // 让复选框和标签在同一行显示
+  align-items: center; // 垂直居中对齐
+  margin-bottom: 5px; // 元素之间添加一定的间距
+}
+
+.indicators-items input[type="checkbox"] {
+  margin-right: 8px; // 复选框和标签之间的间距
+}
+
+.indicators-items label {
+  white-space: nowrap; // 防止标签换行
+}
+
+.indicators-items.delete {
+  text-decoration: line-through; // 下划线效果
+  color: yellow; // 下划线文字颜色
+  background-color: #6f2626; // 下划线背景颜色
+}

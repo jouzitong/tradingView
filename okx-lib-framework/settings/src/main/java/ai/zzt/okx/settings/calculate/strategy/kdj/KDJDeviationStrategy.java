@@ -16,7 +16,7 @@ public class KDJDeviationStrategy {
     /**
      * 是否开启背离策略
      */
-    private boolean enable = true;
+    private boolean enable = false;
 
     /**
      * 背离的阈值. 默认 0

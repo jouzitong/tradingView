@@ -17,7 +17,7 @@ public class KDJGoldenCrossStrategy {
     /**
      * 是否开启交叉信号
      */
-    private boolean enable = true;
+    private boolean enable = false;
 
     /**
      * 金叉的阈值. 默认 0
