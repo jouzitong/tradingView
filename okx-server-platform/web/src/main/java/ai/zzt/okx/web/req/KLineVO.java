@@ -33,10 +33,12 @@ public class KLineVO {
      * 5. 成交量
      * 6. 成交额
      *
-     * 7. macd
-     * 8. dif
-     * 9. dea
+     * 7. macd  (macd)
+     * 8. dif   (macd)
+     * 9. dea   (macd)
      * 10. RSI
+     * 11. BOLL
+     * 12. KDJ
      * </pre>
      */
     private Object[] data;

@@ -32,15 +32,13 @@
             <input name="enablePlaceOrder" type="radio"
                    v-if="placeOrder()"
                    v-model="placeOrder().enablePlaceOrder"
-                   :value="false"
-            />
+                   :value="false"/>
             <span>否</span>
 
             <input name="enablePlaceOrder" type="radio"
                    v-if="placeOrder()"
                    v-model="placeOrder().enablePlaceOrder"
-                   :value="true"
-            />
+                   :value="true"/>
             <span>是</span>
           </div>
 
@@ -53,11 +51,10 @@
             <div style="display: flex">
               <label>杠杆倍数: <span class="required">*</span></label>
               <input disabled name="lever" type="number" v-model="placeOrder().lever"/>
-<!--              <span>(当前账户配置: 全仓: x100, 逐仓 多x20  空x10)</span>-->
+              <!--              <span>(当前账户配置: 全仓: x100, 逐仓 多x20  空x10)</span>-->
               <el-button type="warning">同步</el-button>
             </div>
           </div>
-          <hr/>
           <div>
             <h2>下单限制</h2>
             <div>
@@ -82,6 +79,19 @@
               </div>
             </div>
           </div>
+          <div>
+            <h2>利润配置</h2>
+            <div>
+              <div>
+                <label>最高利润: </label>
+                <input name="maxProfitRate" type="number" v-model="placeOrder().profit.maxProfitRate"/>
+              </div>
+              <div>
+                <label>最低利润: </label>
+                <input name="minProfitRate" type="number" v-model="placeOrder().profit.minProfitRate"/>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -92,9 +102,9 @@
             <div>
               <input name="calculateSettingsFaceMap" type="checkbox"
                      @change="updateCalculateSettingsFaceMap(val.code, $event.target.checked)"
-                     v-bind:value="val.code"
-                     v-bind:checked="val.code in settings.calculateSettingsFaceMap"
-                     v-bind:disabled="val.name === 'BOLL'"
+                     :value="val.code"
+                     :checked="val.code in settings.calculateSettingsFaceMap"
+                     :disabled="val.name === 'BOLL'"
               />
               <label>
                 <!-- 判断如果 val.name === BOLL, 字体打下划线 -->
@@ -347,8 +357,9 @@
 
       <div class="container-tail" v-show="canUpdate">
         <button class="test-red" @click="save">保存</button>
-        <button class="test-red" @click="applyAll">应用全部配置</button>
-        <button class="test-red">取消</button>
+        <template v-if="applyAll!=null">
+          <button class="test-red" @click="applyAll">应用全部配置</button>
+        </template>
       </div>
     </form>
   </div>
@@ -369,7 +380,7 @@ export default {
     "settings": {required: true, type: Object},
     "canUpdate": {required: false, type: Boolean, defaultValue: true},
     "save": {required: false, type: Function},
-    "applyAll": {required: false, type: Function},
+    "applyAll": {required: false, type: Function, defaultValue: null},
   },
   methods: {
 
@@ -436,7 +447,7 @@ export default {
 
     getOrDefault(key) {
       let val = this.defaultSettings.calculateSettingsFaceMap[key];
-      return val.barSettingsMap["1H"];
+      return val.barSettingsMap["15m"];
     }
 
   },
@@ -447,13 +458,6 @@ export default {
     },
     indicators() {
       return store.getters.indicators;
-    },
-    defaultBar() {
-      return {
-        "code": "1H",
-        "name": "1时",
-        "enable": true
-      };
     },
   },
 

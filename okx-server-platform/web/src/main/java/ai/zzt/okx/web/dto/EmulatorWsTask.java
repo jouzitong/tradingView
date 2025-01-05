@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -54,11 +53,11 @@ public class EmulatorWsTask {
     }
 
     public void close() {
-        try {
-            this.session.close();
-        } catch (IOException e) {
-            log.warn("", e);
-        }
+//        try {
+//            this.session.close();
+//        } catch (IOException e) {
+//            log.warn("", e);
+//        }
         tradeTask.cancel();
     }
 

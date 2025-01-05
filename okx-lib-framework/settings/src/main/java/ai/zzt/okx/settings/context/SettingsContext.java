@@ -54,7 +54,7 @@ public class SettingsContext implements Context {
     /**
      * 需要分析的时间周期
      */
-    private List<Bar> bars = Arrays.asList(Bar.H_1);
+    private List<Bar> bars = Arrays.asList(Bar.M_15);
 
     /**
      * 目标权重. 默认 80

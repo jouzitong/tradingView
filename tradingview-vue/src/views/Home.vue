@@ -130,7 +130,6 @@
       <SettingDetail
           :settings="instConfig.settingsContext"
           :can-update="true"
-          :applyAll="localSaveSettingsContext"
           :save="localSaveSettingsContext"/>
       <!--      <el-button @click="showSettingsDetail=false">保存</el-button>-->
     </div>

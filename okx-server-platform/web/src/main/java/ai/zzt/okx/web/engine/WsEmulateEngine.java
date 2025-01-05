@@ -3,6 +3,7 @@ package ai.zzt.okx.web.engine;
 import ai.zzt.okx.calculate.context.AnalyzeContext;
 import ai.zzt.okx.calculate.indicator.BOLL;
 import ai.zzt.okx.calculate.indicator.Indicator;
+import ai.zzt.okx.calculate.indicator.KDJ;
 import ai.zzt.okx.calculate.indicator.KLine;
 import ai.zzt.okx.calculate.indicator.MACD;
 import ai.zzt.okx.calculate.indicator.RSI;
@@ -14,10 +15,10 @@ import ai.zzt.okx.common.utils.K;
 import ai.zzt.okx.common.utils.ThreadUtils;
 import ai.zzt.okx.common.utils.json.JackJsonUtils;
 import ai.zzt.okx.common.vo.RW;
+import ai.zzt.okx.dispatcher.request.TradeOrderRequest;
 import ai.zzt.okx.emulator.callBack.CustomerTaskDTO;
 import ai.zzt.okx.emulator.callBack.DefaultTaskCallBack;
 import ai.zzt.okx.emulator.engine.BaseEmulateEngine;
-import ai.zzt.okx.emulator.serivce.ITaskService;
 import ai.zzt.okx.emulator.type.TaskStatus;
 import ai.zzt.okx.okx_client.context.OrderContext;
 import ai.zzt.okx.settings.calculate.BaseCalculateSettings;
@@ -30,7 +31,6 @@ import ai.zzt.okx.settings.calculate.face.MacdSettingsFace;
 import ai.zzt.okx.settings.calculate.face.RsiSettingsFace;
 import ai.zzt.okx.settings.context.SettingsContext;
 import ai.zzt.okx.settings.service.ISettingsService;
-import ai.zzt.okx.dispatcher.request.TradeOrderRequest;
 import ai.zzt.okx.v5.entity.ws.pri.Order;
 import ai.zzt.okx.v5.enumeration.Bar;
 import ai.zzt.okx.web.req.KLineResp;
@@ -43,6 +43,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -75,13 +76,10 @@ public class WsEmulateEngine extends BaseEmulateEngine {
 
     private static ISettingsService settingsService;
 
-    private static ITaskService taskService;
-
     private Thread taskThread;
 
     static {
         settingsService = ApplicationContextUtils.getBean(ISettingsService.class);
-        taskService = ApplicationContextUtils.getBean(ITaskService.class);
     }
 
     public WsEmulateEngine(Session session, WsEmulatorReq emulatorReq, @NotNull CustomerTaskDTO customerTaskDTO) {
@@ -107,9 +105,8 @@ public class WsEmulateEngine extends BaseEmulateEngine {
         SettingsContext settingsContext = task.getSettingsContext();
 
         if (settingsContext == null) {
-            // TODO 前端目前不传配置
+            // 前端可能不传settingsContext, 则从数据库中获取
             settingsContext = settingsService.getSettings(req.getInstId());
-//            settingsContext = taskService.getSettingsByTaskId("BTC-USDT-SWAPUmgT9IhbUAWIgvEE");
             task.setSettingsContext(settingsContext);
         }
 
@@ -154,7 +151,7 @@ public class WsEmulateEngine extends BaseEmulateEngine {
 //        super.handle(request);
         AnalyzeContext analyzeContext = request.getAnalyzeContext();
         List<BaseIndicatorFace> indicatorFaces = analyzeContext.getIndicatorFaces();
-        Object[] data = new Object[11];
+        Object[] data = new Object[13];
         data[0] = 0L;
 
         long startTime;
@@ -200,7 +197,9 @@ public class WsEmulateEngine extends BaseEmulateEngine {
             } else if (indicator instanceof RSI rsi) {
                 data[10] = rsi.get();
             } else if (indicator instanceof BOLL boll) {
-                data[10] = boll.get();
+                data[11] = boll.get();
+            } else if (indicator instanceof KDJ kdj) {
+                data[12] = kdj.get();
             }
         }
         tempKLine.setData(data);
@@ -209,6 +208,15 @@ public class WsEmulateEngine extends BaseEmulateEngine {
             queue.put(tempKLine);
             tempKLine = null;
         }
+    }
+
+    @Override
+    protected void handleClosePosition(TradeOrderRequest request, Order order) {
+        super.handleClosePosition(request, order);
+        if (tempKLine == null) {
+            tempKLine = new KLineVO();
+        }
+        tempKLine.addOrders(Arrays.asList(order));
     }
 
     @Override

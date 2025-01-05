@@ -51,6 +51,13 @@ public class EmulatorTaskWsServiceApi {
             // TODO 发送消息
             return;
         }
+        String uid = rw.getData().getUid();
+        EmulatorWsTask emulatorWsTask = emulatorWsTaskMap.get(uid);
+        if (emulatorWsTask != null) {
+            // 更新 session
+            emulatorWsTask.setSession(session);
+        }
+
         switch (wsOpCode) {
             case REQUEST_SUB: { // 请求订阅数据
                 WsEmulatorReq req = rw.getData();
@@ -64,7 +71,7 @@ public class EmulatorTaskWsServiceApi {
                     task.setEndTime(et);
                 }
                 WsEmulateEngine tradeTask = new WsEmulateEngine(session, req, task);
-                EmulatorWsTask emulatorWsTask = new EmulatorWsTask();
+                emulatorWsTask = new EmulatorWsTask();
                 emulatorWsTask.setUid(req.getUid());
                 emulatorWsTask.setInstId(req.getInstId());
                 emulatorWsTask.setSession(session);
@@ -77,8 +84,7 @@ public class EmulatorTaskWsServiceApi {
             }
             case REQUEST_PUSH: { // 请求推送数据
                 WsEmulatorReq req = rw.getData();
-                String uid = req.getUid();
-                EmulatorWsTask emulatorWsTask = emulatorWsTaskMap.get(uid);
+                emulatorWsTask = emulatorWsTaskMap.get(uid);
                 if (emulatorWsTask.getReq().isAutoPush()) {
                     log.warn("自动推送数据, 无需请求推送数据");
                     return;
@@ -94,9 +100,7 @@ public class EmulatorTaskWsServiceApi {
                 break;
             }
             case CLOSE_REQUEST: { // 请求关闭连接
-                WsEmulatorReq req = rw.getData();
-                String uid = req.getUid();
-                EmulatorWsTask emulatorWsTask = emulatorWsTaskMap.get(uid);
+                emulatorWsTask = emulatorWsTaskMap.get(uid);
                 if (emulatorWsTask == null) {
                     log.warn("【关闭】未找到对应的uid: {}", uid);
                     return;

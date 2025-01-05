@@ -35,6 +35,7 @@ export default {
   data() {
     return {
       searchText: '',
+      selectedInstId: null // 新增，用于记录当前选中的instId
     };
   },
   props: [

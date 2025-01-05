@@ -55,14 +55,13 @@ public class BaseEmulateEngine implements Callable<TaskResult>, Runnable {
     /**
      * 任务编号
      */
-    private final static ThreadLocal<TradeOrderRequest> requestThreadLocal = new ThreadLocal<>();
+    protected final static ThreadLocal<TradeOrderRequest> requestThreadLocal = new ThreadLocal<>();
 
-    private static final KStoreService kStoreService;
+    protected static final KStoreService kStoreService;
 
-    private static final DefaultKLineEngine kLineEngine;
+    protected static final DefaultKLineEngine kLineEngine;
 
-
-    private static final ProfitRecordRepository profitRecordRepository;
+    protected static final ProfitRecordRepository profitRecordRepository;
 
     static {
         // 初始化基本服务
@@ -157,6 +156,8 @@ public class BaseEmulateEngine implements Callable<TaskResult>, Runnable {
 
                 // 保证一定能取到数据
                 markPrice = customer.take();
+                // TODO 下面的业务逻辑, 不应该是由任务实现
+                TradeOrderRequest request = getRequest();
 
                 try {
                     Long ts = markPrice.getTs();
@@ -169,9 +170,6 @@ public class BaseEmulateEngine implements Callable<TaskResult>, Runnable {
 
                     // 执行调度任务
                     callBack.run(Collections.singletonList(markPrice));
-
-                    // TODO 下面的业务逻辑, 不应该是由任务实现
-                    TradeOrderRequest request = getRequest();
 
                     // 让子类实现其他逻辑. 例如把计算的结果通过ws发送给前端
                     handle(request);
@@ -197,7 +195,9 @@ public class BaseEmulateEngine implements Callable<TaskResult>, Runnable {
                             if (OkxOrderUtils.isOpenPositions(order.getPosSide(), order.getSide())) {
                                 openPosition(markPrice, request, order);
                             } else if (checkClosePosition(request, order)) {
+                                handleClosePosition(request, order);
                                 closePosition(markPrice, request, order);
+
                             }
                         }
                     }
@@ -509,7 +509,12 @@ public class BaseEmulateEngine implements Callable<TaskResult>, Runnable {
     }
 
     public void handle(TradeOrderRequest request) throws InterruptedException {
-        request.getStatisticsContext().handle(request.getMarkPrice(), request.getAnalyzeContext().getAnalyzeTrend());
+//        request.getStatisticsContext()
+//                .handle(request.getMarkPrice(), request.getAnalyzeContext().getAnalyzeTrend());
+    }
+
+    protected void handleClosePosition(TradeOrderRequest request, Order order) {
+
     }
 
     public static TradeOrderRequest getRequest() {
